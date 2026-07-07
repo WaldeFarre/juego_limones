@@ -1,5 +1,6 @@
 let canvas=document.getElementById('areaJuego');
 let ctx=canvas.getContext('2d');
+let intervalo;
 
 const ALTURA_SUELO=20;
 const ALTURA_PERSONAJE=60;
@@ -15,7 +16,7 @@ let vidas=3
 let velocidadCaida=200;
 
 function iniciar(){
-    setInterval(bajarLimon,velocidadCaida);
+    intervalo=setInterval(bajarLimon,velocidadCaida);
     dibujarSuelo();
     dibujarPersonaje();
     dibujarLimon();
@@ -83,6 +84,7 @@ function detectarAtrapado(){
         }
         if(puntaje==10){
             alert("TIENES LOS LIMONES, AHORA TE FALTA SAL Y TEQUILA");
+            clearInterval(intervalo); //facilito no más
         }
     }
 }
@@ -96,6 +98,7 @@ function detectarPiso(){
 
         if(vidas==0){
             alert("GAME OVER");
+            clearInterval(intervalo); //más fácil----
         }
     }
 }
