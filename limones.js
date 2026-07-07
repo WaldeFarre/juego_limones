@@ -33,13 +33,13 @@ function dibujarPersonaje(){
 function moverIzquierda(){
     personajeX=personajeX-10;
     actualizarPantalla();
-    detectarColision();
+    detectarAtrapado();
 }
 
 function moverDerecha(){
     personajeX=personajeX+10;
     actualizarPantalla();
-    detectarColision();
+    detectarAtrapado();
 }
 
 function actualizarPantalla(){
@@ -71,12 +71,12 @@ function detectarAtrapado(){
         limonY+ALTURA_LIMON>personajeY &&
         limonY < personajeY+ALTURA_PERSONAJE)
     {
-        //alert("ATRAPADO!!!!")
         aparecerLimon();
-        mostrarenSpan("txtPuntaje",puntaje);
+        puntaje=puntaje+1;
+        mostrarEnSpan("txtPuntaje",puntaje);
+    }
 }
 
-}
 
 function detectarPiso(){
     if(limonY==canvas.height-ALTURA_SUELO){
