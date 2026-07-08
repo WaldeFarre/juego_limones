@@ -3,57 +3,89 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🍋 Atrapar Limones</title>
+  <title>LEMON·BOY — Atrapar Limones</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"/>
 
-  <link rel="stylesheet" href="limones.css"/>
+  <link rel="stylesheet" href="limones_retro.css"/>
   <script src="utilis.js"></script>
 </head>
 <body onload="iniciar()">
 
-  <!-- Atmósfera de fondo (decorativa) -->
-  <div class="cielo" aria-hidden="true">
-    <span class="orbe orbe--1"></span>
-    <span class="orbe orbe--2"></span>
-    <span class="orbe orbe--3"></span>
-    <span class="orbe orbe--4"></span>
-  </div>
+  <main class="consola">
+    <!-- tornillos -->
+    <span class="tornillo tornillo--tl" aria-hidden="true"></span>
+    <span class="tornillo tornillo--tr" aria-hidden="true"></span>
+    <span class="tornillo tornillo--bl" aria-hidden="true"></span>
+    <span class="tornillo tornillo--br" aria-hidden="true"></span>
 
-  <main class="contenedor">
-    <header class="cabecera">
-      <h1 class="titulo">Atrapar Limones</h1>
-      <p class="tagline">Si del cielo te caen limones… corre a atraparlos 🍋</p>
-      <p class="autor">Autor: WF</p>
-    </header>
-
-    <div class="pantalla">
-      <canvas id="areaJuego" width="800" height="400"></canvas>
+    <!-- barra superior -->
+    <div class="barra-top">
+      <span class="marca">LEMON<span class="punto">·</span>BOY</span>
+      <div class="estado">
+        <span class="power">
+          <span class="led" aria-hidden="true"></span>
+          <span class="power-txt">POWER</span>
+        </span>
+        <span class="rejilla" aria-hidden="true"></span>
+      </div>
     </div>
 
-    <section class="hud" aria-label="Marcador">
-      <div class="hud-item">
-        <span class="hud-icono">🍋</span>
-        <span class="hud-label">Puntaje</span>
-        <span class="hud-valor" id="txtPuntaje">0</span>
+    <!-- pantalla -->
+    <div class="pantalla">
+      <div class="pantalla-top">
+        <h1 class="titulo">▸ ATRAPAR LIMONES</h1>
       </div>
-      <div class="hud-item">
-        <span class="hud-icono">💚</span>
-        <span class="hud-label">Vidas</span>
-        <span class="hud-valor" id="txtVidas">3</span>
+      <div class="crt">
+        <canvas id="areaJuego" width="800" height="400"></canvas>
+      </div>
+    </div>
+
+    <div class="deco-line">
+      <span class="texto">CITRUS DOT MATRIX</span>
+      <span class="rayas" aria-hidden="true"></span>
+    </div>
+
+    <!-- marcador LCD -->
+    <section class="panel-lcd" aria-label="Marcador">
+      <div class="lcd">
+        <span class="lcd-label">SCORE</span>
+        <span class="lcd-valor" id="txtPuntaje">0</span>
+      </div>
+      <div class="lcd">
+        <span class="lcd-label">LIVES</span>
+        <span class="lcd-valor" id="txtVidas">3</span>
       </div>
     </section>
 
-    <div class="botones">
-      <div class="controles">
-        <button class="btn btn--dir" onclick="moverIzquierda()"><span class="flecha">◀</span> Izquierda</button>
-        <button class="btn btn--dir" onclick="moverDerecha()">Derecha <span class="flecha">▶</span></button>
+    <!-- controles -->
+    <div class="controles">
+      <div class="dpad" role="group" aria-label="Movimiento">
+        <span class="dpad-v" aria-hidden="true"></span>
+        <span class="dpad-h" aria-hidden="true"></span>
+        <span class="dpad-centro" aria-hidden="true"></span>
+        <button class="dpad-btn dpad-izq" onclick="moverIzquierda()" aria-label="Mover a la izquierda">◀</button>
+        <button class="dpad-btn dpad-der" onclick="moverDerecha()" aria-label="Mover a la derecha">▶</button>
       </div>
+
       <div class="acciones">
-        <button class="btn btn--reiniciar" onclick="reiniciar()">↻ Reiniciar</button>
-         </div>
+        <div class="par-boton">
+          <button class="btn-accion" onclick="reiniciar()" aria-label="Reiniciar">A</button>
+          <span class="etiqueta">REINICIAR</span>
+        </div>
+        <div class="par-boton">
+          <button class="btn-accion" onclick="probarAleatorio()" aria-label="Probar aleatorio">B</button>
+          <span class="etiqueta">PROBAR</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- barra inferior -->
+    <div class="barra-bot">
+      <span class="firma">AUTOR: WF<br/>MOD. CTS-01 · ©84</span>
+      <span class="altavoz" aria-hidden="true"></span>
     </div>
   </main>
 

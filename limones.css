@@ -1,287 +1,409 @@
-/* ============================================================
-   ATRAPAR LIMONES — estilo cítrico nocturno 🍋
-   Limones que caen de un cielo oscuro
-   ============================================================ */
+/* ================================================================
+   ATRAPAR LIMONES — "LEMON·BOY"  ·  rework retro handheld 🍋
+   Consola portátil ochentera · pantalla CRT verde fósforo
+   ================================================================ */
 
 :root {
-  /* Paleta: limón + hoja sobre cielo nocturno */
-  --noche:       #0a1018;                 /* fondo base                */
-  --noche-prof:  #0f1a2e;                 /* azul noche profundo       */
-  --limon:       #e0f24a;                 /* amarillo-lima principal   */
-  --limon-claro: #f4ffa0;                 /* limón pálido              */
-  --hoja:        #5ad67d;                 /* verde hoja                */
-  --corteza:     #b6d13f;                 /* verde cáscara / oliva     */
-  --crema:       #eef3e2;                 /* texto claro cálido        */
-  --niebla:      #8f9d84;                 /* texto atenuado            */
-  --linea:       rgba(224, 242, 74, 0.16); /* bordes tenues cítricos  */
+  /* Carcasa (plástico crema retro) */
+  --carcasa:     #dad5bc;
+  --carcasa-luz: #eee9d4;
+  --carcasa-som: #b6b198;
+  --carcasa-borde:#9f9a81;
+
+  /* Grafito (D-pad) */
+  --grafito:     #2b2b30;
+  --grafito-luz: #45454d;
+  --grafito-som: #141416;
+
+  /* Pantalla CRT verde fósforo */
+  --bezel:       #223318;
+  --bezel-osc:   #10200c;
+  --crt-fondo:   #0a1a08;
+  --dmg-oscuro:  #0f380f;
+  --dmg-medio:   #306230;
+  --fosforo:     #b7f24a;   /* verde-limón brillante        */
+  --fosforo-ten: #6f9a2e;   /* fósforo atenuado             */
+
+  /* Acentos */
+  --boton:       #b23a5e;   /* granate botones A/B          */
+  --boton-luz:   #d4607f;
+  --boton-som:   #7c2440;
+  --led:         #e5f24a;   /* LED de encendido (limón)     */
+  --deco:        #8f3a6b;   /* línea decorativa "dot matrix"*/
+
+  --pixel: 'Press Start 2P', monospace;
+  --term:  'VT323', monospace;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Nunito', system-ui, Arial, sans-serif;
+  font-family: var(--term);
   background:
-    radial-gradient(1200px 600px at 50% -10%, #142542 0%, transparent 60%),
-    linear-gradient(180deg, var(--noche-prof) 0%, var(--noche) 55%, #070b12 100%);
-  background-attachment: fixed;
-  color: var(--crema);
-  text-align: center;
+    radial-gradient(900px 500px at 50% -5%, rgba(120, 170, 40, 0.10), transparent 60%),
+    radial-gradient(1000px 700px at 50% 120%, rgba(120, 60, 100, 0.08), transparent 60%),
+    #0e120f;
+  color: var(--carcasa);
   margin: 0;
-  padding: 32px 20px 48px;
+  padding: 34px 16px 48px;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
-  position: relative;
 }
 
-/* ---- Bokeh cítrico de fondo (atmósfera) ---------------------- */
-.cielo {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-}
-.orbe {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(42px);
-  opacity: 0.35;
-  will-change: transform;
-}
-.orbe--1 {
-  width: 320px; height: 320px;
-  top: -60px; left: -40px;
-  background: radial-gradient(circle, rgba(224, 242, 74, 0.9), transparent 70%);
-  animation: flotar 22s ease-in-out infinite;
-}
-.orbe--2 {
-  width: 260px; height: 260px;
-  top: 20%; right: -70px;
-  background: radial-gradient(circle, rgba(90, 214, 125, 0.8), transparent 70%);
-  animation: flotar 28s ease-in-out infinite reverse;
-}
-.orbe--3 {
-  width: 200px; height: 200px;
-  bottom: 8%; left: 8%;
-  background: radial-gradient(circle, rgba(182, 209, 63, 0.8), transparent 70%);
-  animation: flotar 26s ease-in-out infinite;
-}
-.orbe--4 {
-  width: 160px; height: 160px;
-  bottom: -40px; right: 18%;
-  background: radial-gradient(circle, rgba(244, 255, 160, 0.7), transparent 70%);
-  animation: flotar 20s ease-in-out infinite reverse;
-}
-@keyframes flotar {
-  0%, 100% { transform: translate(0, 0); }
-  50%      { transform: translate(24px, -30px); }
-}
-
-/* ---- Contenedor --------------------------------------------- */
-.contenedor {
+/* ================= CONSOLA (carcasa) ============================ */
+.consola {
   position: relative;
   width: 100%;
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: 720px;
+  padding: clamp(16px, 3.5vw, 26px);
+  border-radius: 22px 22px 74px 22px;   /* esquina inf-der icónica */
+  background:
+    linear-gradient(160deg, var(--carcasa-luz) 0%, var(--carcasa) 45%, var(--carcasa-som) 100%);
+  border: 1px solid var(--carcasa-borde);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -6px 14px rgba(0, 0, 0, 0.14),
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    0 4px 0 rgba(0, 0, 0, 0.25);
 }
 
-/* ---- Cabecera ----------------------------------------------- */
-.cabecera { margin-bottom: 22px; }
+/* Tornillos en las esquinas */
+.tornillo {
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f2eede, #a5a088 70%, #8a8570);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.3);
+}
+.tornillo::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, transparent 44%, #7d7963 44% 56%, transparent 56%);
+}
+.tornillo--tl { top: 12px; left: 12px; }
+.tornillo--tr { top: 12px; right: 12px; }
+.tornillo--bl { bottom: 14px; left: 14px; }
+.tornillo--br { bottom: 58px; right: 16px; }
 
-.titulo {
-  font-family: 'Fredoka', sans-serif;
-  font-weight: 700;
-  font-size: clamp(2.2rem, 6vw, 3.5rem);
-  line-height: 1.05;
-  margin: 0;
-  letter-spacing: 0.5px;
-  color: var(--limon);
-  text-shadow: 0 0 24px rgba(224, 242, 74, 0.35);
+/* ================= BARRA SUPERIOR =============================== */
+.barra-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 12px;
+  margin-bottom: 6px;
 }
-.tagline {
-  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
-  color: var(--crema);
-  opacity: 0.9;
-  margin: 10px 0 0;
-  font-weight: 600;
+.marca {
+  font-family: var(--pixel);
+  font-size: clamp(13px, 3.2vw, 19px);
+  color: var(--grafito);
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
 }
-.autor {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  color: var(--niebla);
-  margin: 8px 0 0;
-  font-weight: 700;
+.marca .punto { color: var(--boton); }
+
+.estado { display: flex; align-items: center; gap: 14px; }
+.power { display: flex; align-items: center; gap: 7px; }
+.led {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fbff9e, var(--led) 55%, #9aa300);
+  box-shadow: 0 0 10px rgba(229, 242, 74, 0.9), 0 0 3px rgba(229,242,74,0.9);
+  animation: latido 3.5s ease-in-out infinite;
+}
+@keyframes latido {
+  0%, 100% { box-shadow: 0 0 10px rgba(229,242,74,0.9), 0 0 3px rgba(229,242,74,0.9); }
+  50%      { box-shadow: 0 0 16px rgba(229,242,74,1),   0 0 5px rgba(229,242,74,1); }
+}
+.power-txt {
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--grafito-luz);
+  letter-spacing: 1px;
+}
+.rejilla {
+  width: 46px; height: 20px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(90deg,
+      var(--carcasa-som) 0 3px, transparent 3px 6px);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
 }
 
-/* ---- Pantalla / marco del canvas ---------------------------- */
+/* ================= PANTALLA (bezel + CRT) ====================== */
 .pantalla {
   position: relative;
-  width: 100%;
-  padding: 14px;
-  border-radius: 22px;
-  background: linear-gradient(160deg, #16233a, #0c1421);
-  border: 1px solid var(--linea);
+  padding: clamp(14px, 3vw, 22px);
+  border-radius: 12px 12px 34px 12px;
+  background: linear-gradient(160deg, var(--bezel), var(--bezel-osc));
   box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.4),
-    0 24px 60px rgba(0, 0, 0, 0.55),
-    0 0 60px rgba(224, 242, 74, 0.10);
-  animation: resplandor 6s ease-in-out infinite;
+    inset 0 4px 12px rgba(0,0,0,0.65),
+    inset 0 -1px 0 rgba(255,255,255,0.06),
+    0 1px 0 rgba(255,255,255,0.4);
 }
-@keyframes resplandor {
-  0%, 100% {
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.4),
-      0 24px 60px rgba(0, 0, 0, 0.55),
-      0 0 50px rgba(224, 242, 74, 0.08);
-  }
-  50% {
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.4),
-      0 24px 60px rgba(0, 0, 0, 0.55),
-      0 0 80px rgba(224, 242, 74, 0.18);
-  }
+.pantalla-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+.pantalla-top .titulo {
+  font-family: var(--pixel);
+  font-size: clamp(9px, 2.3vw, 12px);
+  color: var(--fosforo-ten);
+  letter-spacing: 1px;
+  margin: 0;
+  text-align: center;
 }
 
+/* Envoltura CRT: aloja el canvas + efectos */
+.crt {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 22px rgba(120, 200, 40, 0.14), inset 0 0 60px rgba(0,0,0,0.7);
+}
 /* IMPORTANTE: se conserva el id #areaJuego y sus atributos width/height */
 #areaJuego {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 14px;
   background:
-    radial-gradient(600px 300px at 50% 0%, rgba(224, 242, 74, 0.06), transparent 70%),
-    linear-gradient(180deg, #0d1a30 0%, #0a1220 100%);
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+    radial-gradient(500px 260px at 50% 0%, rgba(120, 200, 40, 0.10), transparent 70%),
+    linear-gradient(180deg, #0c1f0a 0%, var(--crt-fondo) 100%);
+  image-rendering: pixelated;
+}
+/* Scanlines */
+.crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+      rgba(0,0,0,0.22) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+/* Reflejo de vidrio */
+.crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, transparent 30%);
 }
 
-/* ---- HUD / marcador ----------------------------------------- */
-.hud {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 22px 0;
-}
-.hud-item {
+/* Línea decorativa "dot matrix" */
+.deco-line {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--linea);
-  backdrop-filter: blur(6px);
-  min-width: 160px;
+  padding: 12px 6px 2px;
 }
-.hud-icono { font-size: 1.5rem; line-height: 1; }
-.hud-label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--niebla);
-  font-weight: 700;
+.deco-line .texto {
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--deco);
+  letter-spacing: 1px;
+  white-space: nowrap;
 }
-.hud-valor {
-  font-family: 'Fredoka', sans-serif;
-  font-weight: 700;
-  font-size: 1.7rem;
-  margin-left: auto;
-  min-width: 1.4ch;
-  color: var(--limon);
+.deco-line .rayas {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(-45deg,
+      var(--deco) 0 4px, transparent 4px 8px);
+  opacity: 0.7;
 }
-.hud-item:last-child .hud-valor { color: var(--hoja); }
 
-/* ---- Botones ------------------------------------------------ */
-.botones {
+/* ================= MARCADOR (mini-LCD) ========================= */
+.panel-lcd {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-}
-.controles,
-.acciones {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 14px;
   justify-content: center;
+  margin: 20px 4px 22px;
+}
+.lcd {
+  flex: 1;
+  max-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #0c1806, #060f04);
+  border: 2px solid var(--bezel-osc);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.35);
+}
+.lcd-label {
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--fosforo-ten);
+  letter-spacing: 1px;
+}
+.lcd-valor {
+  font-family: var(--term);
+  font-size: clamp(28px, 7vw, 40px);
+  line-height: 1;
+  margin-left: auto;
+  color: var(--fosforo);
+  text-shadow: 0 0 8px rgba(183, 242, 74, 0.7);
 }
 
-.btn {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  padding: 13px 22px;
-  border-radius: 14px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.2s ease,
-              background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  display: inline-flex;
+/* ================= CONTROLES =================================== */
+.controles {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  color: var(--crema);
-  background: rgba(255, 255, 255, 0.04);
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 6px 2px;
 }
-.btn:hover  { transform: translateY(-2px); }
-.btn:active { transform: translateY(1px) scale(0.98); }
-.btn:focus-visible {
-  outline: 3px solid var(--limon-claro);
+
+/* ---- D-pad ---- */
+.dpad {
+  position: relative;
+  width: clamp(120px, 30vw, 150px);
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+}
+.dpad-v, .dpad-h {
+  position: absolute;
+  background: linear-gradient(180deg, var(--grafito-luz), var(--grafito));
+  border-radius: 8px;
+  box-shadow: inset 0 2px 2px rgba(255,255,255,0.12), 0 3px 5px rgba(0,0,0,0.4);
+}
+.dpad-v { left: 34%; top: 2%; width: 32%; height: 96%; }
+.dpad-h { top: 34%; left: 2%; height: 32%; width: 96%; }
+.dpad-centro {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26%; height: 26%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--grafito-luz), var(--grafito-som));
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.15);
+  z-index: 3;
+  pointer-events: none;
+}
+/* Brazos funcionales */
+.dpad-btn {
+  position: absolute;
+  top: 34%;
+  height: 32%;
+  width: 33%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  border-radius: 8px;
+  transition: color 0.15s ease, box-shadow 0.1s ease;
+}
+.dpad-izq { left: 2%; }
+.dpad-der { right: 2%; }
+.dpad-btn:hover { color: var(--fosforo); }
+.dpad-btn:active {
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
+  color: var(--led);
+}
+.dpad-btn:focus-visible {
+  outline: 3px solid var(--fosforo);
   outline-offset: 2px;
 }
 
-/* Direccionales — control primario */
-.btn--dir {
-  background: linear-gradient(180deg, var(--limon), var(--corteza));
-  color: #10160a;
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 20px rgba(224, 242, 74, 0.22);
-  min-width: 140px;
-  justify-content: center;
+/* ---- Botones de acción (A / B) ---- */
+.acciones {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(14px, 4vw, 26px);
 }
-.btn--dir:hover { box-shadow: 0 12px 28px rgba(224, 242, 74, 0.35); }
-.flecha { font-size: 0.85rem; }
+.par-boton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+.btn-accion {
+  width: clamp(52px, 13vw, 66px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-family: var(--pixel);
+  font-size: clamp(13px, 3.4vw, 18px);
+  color: #ffe6ee;
+  background: radial-gradient(circle at 38% 32%, var(--boton-luz), var(--boton) 62%, var(--boton-som));
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.35),
+    inset 0 -3px 5px rgba(0,0,0,0.3),
+    0 5px 0 var(--boton-som),
+    0 7px 10px rgba(0,0,0,0.4);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.btn-accion:hover { filter: brightness(1.06); }
+.btn-accion:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.25),
+    inset 0 -2px 4px rgba(0,0,0,0.35),
+    0 1px 0 var(--boton-som),
+    0 2px 5px rgba(0,0,0,0.4);
+}
+.btn-accion:focus-visible {
+  outline: 3px solid var(--led);
+  outline-offset: 3px;
+}
+.etiqueta {
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--grafito);
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.45);
+}
 
-/* Reiniciar — secundario (verde hoja) */
-.btn--reiniciar {
-  background: rgba(90, 214, 125, 0.08);
-  border-color: rgba(90, 214, 125, 0.4);
-  color: #cbf3d6;
+/* ================= BARRA INFERIOR ============================== */
+.barra-bot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 8px 2px;
 }
-.btn--reiniciar:hover {
-  background: rgba(90, 214, 125, 0.16);
-  border-color: var(--hoja);
+.firma {
+  font-family: var(--pixel);
+  font-size: 7px;
+  color: var(--carcasa-som);
+  letter-spacing: 1px;
+  line-height: 1.8;
 }
-
-/* Probar aleatorio — terciario / discreto */
-.btn--probar {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: var(--niebla);
-}
-.btn--probar:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(224, 242, 74, 0.4);
-  color: var(--limon-claro);
-}
-
-/* ---- Responsive --------------------------------------------- */
-@media (max-width: 520px) {
-  body { padding: 20px 14px 32px; }
-  .controles,
-  .acciones { width: 100%; }
-  .controles .btn,
-  .acciones .btn { flex: 1 1 auto; min-width: 0; }
-  .hud-item { flex: 1 1 auto; min-width: 130px; }
+.altavoz {
+  width: 70px; height: 26px;
+  border-radius: 5px;
+  background: repeating-linear-gradient(-45deg,
+      var(--carcasa-som) 0 3px, transparent 3px 6px);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.28);
+  flex-shrink: 0;
 }
 
-/* ---- Accesibilidad: menos movimiento ------------------------ */
+/* ================= RESPONSIVE ================================== */
+@media (max-width: 420px) {
+  .controles { gap: 8px; }
+  .acciones { gap: 14px; }
+  .power-txt { display: none; }
+  .deco-line .texto { font-size: 7px; }
+}
+
+/* ================= MENOS MOVIMIENTO =========================== */
 @media (prefers-reduced-motion: reduce) {
-  .orbe,
-  .pantalla { animation: none; }
-  .btn { transition: none; }
+  .led { animation: none; }
+  .btn-accion, .dpad-btn { transition: none; }
 }
