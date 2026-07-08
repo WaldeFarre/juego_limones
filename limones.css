@@ -285,3 +285,13 @@ body {
   .pantalla { animation: none; }
   .btn { transition: none; }
 }
+
+.cabecera::before {
+    content: "";
+    display: block;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 15px;
+    background: url("W.png") no-repeat center;
+    background-size: contain;
+}
