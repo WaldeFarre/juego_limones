@@ -1,30 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Caza Estrellas</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🍋 Atrapar Limones</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+
   <link rel="stylesheet" href="limones.css"/>
   <script src="utilis.js"></script>
- 
- 
 </head>
 <body onload="iniciar()">
-  <div class="contenedor">
-    <h1>Atrapar Limones</h1>
-    <p>Si del cielo te caen limones ..... </p>
-    <h2>Autor: WF</h2>
-    <canvas id="areaJuego" width="800" height="400"></canvas>
-    
-    <div class="panel">
-      <p>Puntaje: <span id="txtPuntaje">0</span></p>
-      <p>Vidas: <span id="txtVidas">3</span></p>
-    </div>
-    <div class="botones">
-      <button onclick="moverIzquierda()">Izquierda</button>
-      <button onclick="moverDerecha()">Derecha</button>
-      <button onclick="reiniciar()">Reiniciar</button>
-      <button onclick="probarAleatorio()">Probar Aleatorio</button>
-    </div>
+
+  <!-- Atmósfera de fondo (decorativa) -->
+  <div class="cielo" aria-hidden="true">
+    <span class="orbe orbe--1"></span>
+    <span class="orbe orbe--2"></span>
+    <span class="orbe orbe--3"></span>
+    <span class="orbe orbe--4"></span>
   </div>
+
+  <main class="contenedor">
+    <header class="cabecera">
+      <h1 class="titulo">Atrapar Limones</h1>
+      <p class="tagline">Si del cielo te caen limones… corre a atraparlos 🍋</p>
+      <p class="autor">Autor: WF</p>
+    </header>
+
+    <div class="pantalla">
+      <canvas id="areaJuego" width="800" height="400"></canvas>
+    </div>
+
+    <section class="hud" aria-label="Marcador">
+      <div class="hud-item">
+        <span class="hud-icono">🍋</span>
+        <span class="hud-label">Puntaje</span>
+        <span class="hud-valor" id="txtPuntaje">0</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-icono">💚</span>
+        <span class="hud-label">Vidas</span>
+        <span class="hud-valor" id="txtVidas">3</span>
+      </div>
+    </section>
+
+    <div class="botones">
+      <div class="controles">
+        <button class="btn btn--dir" onclick="moverIzquierda()"><span class="flecha">◀</span> Izquierda</button>
+        <button class="btn btn--dir" onclick="moverDerecha()">Derecha <span class="flecha">▶</span></button>
+      </div>
+      <div class="acciones">
+        <button class="btn btn--reiniciar" onclick="reiniciar()">↻ Reiniciar</button>
+        <button class="btn btn--probar" onclick="probarAleatorio()">🎲 Probar aleatorio</button>
+      </div>
+    </div>
+  </main>
+
   <script src="limones.js"></script>
 </body>
 </html>

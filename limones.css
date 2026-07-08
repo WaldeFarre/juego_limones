@@ -1,31 +1,287 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #0f172a;
-  color: white;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
+/* ============================================================
+   ATRAPAR LIMONES — estilo cítrico nocturno 🍋
+   Limones que caen de un cielo oscuro
+   ============================================================ */
+
+:root {
+  /* Paleta: limón + hoja sobre cielo nocturno */
+  --noche:       #0a1018;                 /* fondo base                */
+  --noche-prof:  #0f1a2e;                 /* azul noche profundo       */
+  --limon:       #e0f24a;                 /* amarillo-lima principal   */
+  --limon-claro: #f4ffa0;                 /* limón pálido              */
+  --hoja:        #5ad67d;                 /* verde hoja                */
+  --corteza:     #b6d13f;                 /* verde cáscara / oliva     */
+  --crema:       #eef3e2;                 /* texto claro cálido        */
+  --niebla:      #8f9d84;                 /* texto atenuado            */
+  --linea:       rgba(224, 242, 74, 0.16); /* bordes tenues cítricos  */
 }
 
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Nunito', system-ui, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #142542 0%, transparent 60%),
+    linear-gradient(180deg, var(--noche-prof) 0%, var(--noche) 55%, #070b12 100%);
+  background-attachment: fixed;
+  color: var(--crema);
+  text-align: center;
+  margin: 0;
+  padding: 32px 20px 48px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---- Bokeh cítrico de fondo (atmósfera) ---------------------- */
+.cielo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.orbe {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(42px);
+  opacity: 0.35;
+  will-change: transform;
+}
+.orbe--1 {
+  width: 320px; height: 320px;
+  top: -60px; left: -40px;
+  background: radial-gradient(circle, rgba(224, 242, 74, 0.9), transparent 70%);
+  animation: flotar 22s ease-in-out infinite;
+}
+.orbe--2 {
+  width: 260px; height: 260px;
+  top: 20%; right: -70px;
+  background: radial-gradient(circle, rgba(90, 214, 125, 0.8), transparent 70%);
+  animation: flotar 28s ease-in-out infinite reverse;
+}
+.orbe--3 {
+  width: 200px; height: 200px;
+  bottom: 8%; left: 8%;
+  background: radial-gradient(circle, rgba(182, 209, 63, 0.8), transparent 70%);
+  animation: flotar 26s ease-in-out infinite;
+}
+.orbe--4 {
+  width: 160px; height: 160px;
+  bottom: -40px; right: 18%;
+  background: radial-gradient(circle, rgba(244, 255, 160, 0.7), transparent 70%);
+  animation: flotar 20s ease-in-out infinite reverse;
+}
+@keyframes flotar {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(24px, -30px); }
+}
+
+/* ---- Contenedor --------------------------------------------- */
 .contenedor {
-  max-width: 800px;
+  position: relative;
+  width: 100%;
+  max-width: 860px;
   margin: 0 auto;
 }
 
-canvas {
-  background-color: #111827;
-  border: 3px solid #38bdf8;
+/* ---- Cabecera ----------------------------------------------- */
+.cabecera { margin-bottom: 22px; }
+
+.titulo {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: 0.5px;
+  color: var(--limon);
+  text-shadow: 0 0 24px rgba(224, 242, 74, 0.35);
+}
+.tagline {
+  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
+  color: var(--crema);
+  opacity: 0.9;
+  margin: 10px 0 0;
+  font-weight: 600;
+}
+.autor {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--niebla);
+  margin: 8px 0 0;
+  font-weight: 700;
+}
+
+/* ---- Pantalla / marco del canvas ---------------------------- */
+.pantalla {
+  position: relative;
+  width: 100%;
+  padding: 14px;
+  border-radius: 22px;
+  background: linear-gradient(160deg, #16233a, #0c1421);
+  border: 1px solid var(--linea);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 0 60px rgba(224, 242, 74, 0.10);
+  animation: resplandor 6s ease-in-out infinite;
+}
+@keyframes resplandor {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.4),
+      0 24px 60px rgba(0, 0, 0, 0.55),
+      0 0 50px rgba(224, 242, 74, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.4),
+      0 24px 60px rgba(0, 0, 0, 0.55),
+      0 0 80px rgba(224, 242, 74, 0.18);
+  }
+}
+
+/* IMPORTANTE: se conserva el id #areaJuego y sus atributos width/height */
+#areaJuego {
   display: block;
-  margin: 20px auto;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  background:
+    radial-gradient(600px 300px at 50% 0%, rgba(224, 242, 74, 0.06), transparent 70%),
+    linear-gradient(180deg, #0d1a30 0%, #0a1220 100%);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
 }
 
-.panel {
-  margin: 20px 0;
+/* ---- HUD / marcador ----------------------------------------- */
+.hud {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--linea);
+  backdrop-filter: blur(6px);
+  min-width: 160px;
+}
+.hud-icono { font-size: 1.5rem; line-height: 1; }
+.hud-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--niebla);
+  font-weight: 700;
+}
+.hud-valor {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 1.7rem;
+  margin-left: auto;
+  min-width: 1.4ch;
+  color: var(--limon);
+}
+.hud-item:last-child .hud-valor { color: var(--hoja); }
+
+/* ---- Botones ------------------------------------------------ */
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.controles,
+.acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.botones button {
-  margin: 5px;
-  padding: 10px 16px;
-  font-size: 16px;
+.btn {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 13px 22px;
+  border-radius: 14px;
+  border: 1px solid transparent;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.2s ease,
+              background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--crema);
+  background: rgba(255, 255, 255, 0.04);
+}
+.btn:hover  { transform: translateY(-2px); }
+.btn:active { transform: translateY(1px) scale(0.98); }
+.btn:focus-visible {
+  outline: 3px solid var(--limon-claro);
+  outline-offset: 2px;
+}
+
+/* Direccionales — control primario */
+.btn--dir {
+  background: linear-gradient(180deg, var(--limon), var(--corteza));
+  color: #10160a;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 20px rgba(224, 242, 74, 0.22);
+  min-width: 140px;
+  justify-content: center;
+}
+.btn--dir:hover { box-shadow: 0 12px 28px rgba(224, 242, 74, 0.35); }
+.flecha { font-size: 0.85rem; }
+
+/* Reiniciar — secundario (verde hoja) */
+.btn--reiniciar {
+  background: rgba(90, 214, 125, 0.08);
+  border-color: rgba(90, 214, 125, 0.4);
+  color: #cbf3d6;
+}
+.btn--reiniciar:hover {
+  background: rgba(90, 214, 125, 0.16);
+  border-color: var(--hoja);
+}
+
+/* Probar aleatorio — terciario / discreto */
+.btn--probar {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: var(--niebla);
+}
+.btn--probar:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(224, 242, 74, 0.4);
+  color: var(--limon-claro);
+}
+
+/* ---- Responsive --------------------------------------------- */
+@media (max-width: 520px) {
+  body { padding: 20px 14px 32px; }
+  .controles,
+  .acciones { width: 100%; }
+  .controles .btn,
+  .acciones .btn { flex: 1 1 auto; min-width: 0; }
+  .hud-item { flex: 1 1 auto; min-width: 130px; }
+}
+
+/* ---- Accesibilidad: menos movimiento ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .orbe,
+  .pantalla { animation: none; }
+  .btn { transition: none; }
 }
